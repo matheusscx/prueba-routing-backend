@@ -1,0 +1,60 @@
+Table route as R {
+  organization_id uuid [ref: > O.organization_id]
+  vehicle_id uuid  [ref: > V.vehicle_id]
+  driver_id uuid  [ref: > D.driver_id]
+  starts_at time
+  ends_at time
+  travel_time varchar
+  total_stops int
+  action_id uuid [ref: > A.action_id]
+  status_id uuid [ref: > S.status_id]
+  created_at timestamp [default: `now()`]// default value
+  Indexes {
+    (organization_id, driver_id, vehicle_id) [pk]
+  }
+}
+
+Table vehicle as V {
+  vehicle_id uuid [pk]
+  organization_id uuid [ref: > O.organization_id]
+  plate varchar
+  created_at timestamp [default: `now()`]// default value
+}
+
+Table driver as D {
+  driver_id uuid [pk]
+  organization_id uuid [ref: > O.organization_id]
+  name varchar
+  last_name varchar
+  created_at timestamp [default: `now()`]// default value
+}
+
+Table user as U {
+ subject varchar 
+ email varchar
+ national_nid varchar
+ created_at timestamp [default: `now()`]// default value
+   Indexes {
+    (subject, email, national_nid) [pk]
+  }
+}
+
+
+Table organization as O {
+  organization_id uuid  [pk]
+  name varchar
+  created_at timestamp [default: `now()`]// default value
+}
+
+
+Table action as A {
+  action_id uuid  [pk]
+  name varchar
+  created_at timestamp [default: `now()`]// default value
+}
+
+Table status as S {
+  status_id uuid  [pk]
+  name varchar
+  created_at timestamp [default: `now()`]// default value
+}
